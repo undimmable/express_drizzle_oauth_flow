@@ -1,0 +1,13 @@
+.idea/
+*.log
+npm-debug.log*
+*.pid
+*.pid.lock
+node_modules/
+*.tsbuildinfo
+.npm
+.eslintcache
+.stylelintcache
+.node_repl_history
+.env.development.local
+drizzle/
