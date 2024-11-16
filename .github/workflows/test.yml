@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  tsc:
+    name: tsc
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: install node v23
+        uses: actions/setup-node@v1
+        with:
+          node-version: 23
+      - name: npm install
+        run: npm install
+      - name: tsc
+        run: npx tsc
