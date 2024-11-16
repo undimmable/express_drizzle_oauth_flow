@@ -1,5 +1,5 @@
 networks:
-  drizzle:
+  express:
     driver: bridge
 
 services:
@@ -15,7 +15,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - drizzle
+      - express
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 5s
@@ -25,12 +25,12 @@ services:
     image: node
     container_name: express
     volumes:
-      - ./:/app/node_modules
+      - ./:/app
     command: bash -c "cd /app && npm run server"
     ports:
       - "3000:3000"
     networks:
-      - drizzle
+      - express
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1" ]
       interval: 10s
