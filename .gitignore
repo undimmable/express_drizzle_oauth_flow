@@ -9,5 +9,9 @@ node_modules/
 .eslintcache
 .stylelintcache
 .node_repl_history
+.env
 .env.development.local
 drizzle/
+
+*.js
+*.js.map

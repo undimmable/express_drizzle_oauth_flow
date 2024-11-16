@@ -4,12 +4,13 @@
     "module": "CommonJS",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": "./",
-    "rootDirs": ["./", "./src"],
+    "rootDirs": ["./"],
     "typeRoots": [
-      "./src/types"
+      "./types"
     ]
   }
 }

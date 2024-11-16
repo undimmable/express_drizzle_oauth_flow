@@ -1,7 +1,7 @@
 import {drizzle} from "drizzle-orm/node-postgres";
-import {clientsTable, companiesTable, productsTable, subscriptionsTable, userAuthTable} from "./db/schema";
 import {and, eq} from "drizzle-orm";
 import {Pool} from "pg";
+import {clientsTable, companiesTable, productsTable, subscriptionsTable, userAuthTable} from "./schema";
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL!,
@@ -85,6 +85,30 @@ export namespace SubscriptionsRepository {
     export const getByClientId = async (clientId: string) => {
         return db.select().from(subscriptionsTable).where(eq(subscriptionsTable.client_id, clientId));
     }
+
+    export const createSubscription = async (productId: string, clientId: string) => {
+        return await db.transaction(async (tx) => {
+            const products = await tx
+                .select()
+                .from(productsTable)
+                .where(
+                    eq(productsTable.id, productId)
+                );
+            if (products.length === 0) {
+                throw new NotFound();
+            } else {
+                await tx
+                    .insert(subscriptionsTable)
+                    .values({
+                        product_id: productId,
+                        client_id: clientId
+                    });
+            }
+        });
+    };
+
+    export class NotFound extends Error {
+    };
 }
 
 export namespace CompanyRepository {

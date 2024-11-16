@@ -2,8 +2,8 @@ import {NextFunction, Request, Response} from "express";
 import crypto from "crypto";
 import {and, eq} from "drizzle-orm";
 import jwt, {DecodeOptions, SignOptions, VerifyOptions} from "jsonwebtoken";
-import {AuthRepository, ClientRepository, CompanyRepository, db} from "./repositories";
-import {clientsTable, companiesTable, schema} from "./db/schema";
+import {AuthRepository, ClientRepository, CompanyRepository, db} from "../db/repositories";
+import {clientsTable, companiesTable, schema } from "../db/schema";
 
 const ACCESS_TOKEN_TTL: string = '15m';
 const REFRESH_TOKEN_TTL: string = '15d';
@@ -54,8 +54,8 @@ export const getBusinessIdOrUsername = (payload: UserPayload): string => {
     return isCompany(payload.role) ? payload.business_id! : payload.username!;
 }
 
-export const getId = (payload: { id: string }): string => {
-    return payload.id;
+export const getId = (payload: { entity_id: string }): string => {
+    return payload.entity_id;
 }
 
 export const authenticateWithAccessToken = (userRole: UserRole, ...userRoles: UserRole[]) => {
@@ -172,7 +172,7 @@ const authenticateClient = async (req: Request, res: Response, next: NextFunctio
         .select()
         .from(clientsTable)
         .where(
-            eq(clientsTable, getId(req.token! as unknown as { id: string }))
+            eq(clientsTable.username, getId(req.token! as unknown as { entity_id: string }))
         );
     if (clients.length === 0) {
         return res.status(401).json({reason: ErrorReasons.token_invalid});

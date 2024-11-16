@@ -21,5 +21,25 @@ services:
       interval: 5s
       retries: 5
 
+  drizzle:
+    image: node
+    container_name: express
+    volumes:
+      - ./:/app/node_modules
+    command: bash -c "cd /app && npm run server"
+    ports:
+      - "3000:3000"
+    networks:
+      - drizzle
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres-data:

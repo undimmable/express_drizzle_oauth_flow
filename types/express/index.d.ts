@@ -1,6 +1,6 @@
 // noinspection ES6UnusedImports
 import express from "express";
-import {Client, Company, RefreshTokenPayload, UserPayload} from "../../auth";
+import {Client, Company, RefreshTokenPayload, UserPayload} from "../../middleware/auth";
 
 declare global {
     namespace Express {
