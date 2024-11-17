@@ -23,6 +23,7 @@
     "build": "npx tsc",
     "clean": "npx tsc --build --clean",
     "db:migrate": "npx drizzle-kit --config ./config/drizzle.config.ts push",
-    "server": "node --env-file=.env -r ts-node/register app.ts"
+    "server": "node --env-file=.env -r ts-node/register app.ts",
+    "server-docker": "node --env-file=.env.docker -r ts-node/register app.ts"
   }
 }

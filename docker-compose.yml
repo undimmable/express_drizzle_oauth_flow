@@ -26,7 +26,7 @@ services:
     container_name: express
     volumes:
       - ./:/app
-    command: bash -c "cd /app && npm run server"
+    command: bash -c "cd /app && npm run server-docker"
     ports:
       - "3000:3000"
     networks:
